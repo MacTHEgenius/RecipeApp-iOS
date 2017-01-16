@@ -55,4 +55,42 @@ describe Api::V1::AuthorsController do
     end
   end
 
+  describe "PUT/PATCH #update" do
+
+    context "when is successfully updated" do
+      before(:each) do
+        @author = FactoryGirl.create :author
+        patch :update, { id: @author.id,
+                         author: { email: "newmail@example.com" } }, format: :json
+      end
+
+      it "renders the json representation for the updated author" do
+        author_response = JSON.parse(response.body, symbolize_names: true)
+        expect(author_response[:email]).to eql "newmail@example.com"
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when is not created" do
+      before(:each) do
+        @author = FactoryGirl.create :author
+        patch :update, { id: @author.id,
+                         author: { email: "bademail.com" } }, format: :json
+      end
+
+      it "renders an errors json" do
+        author_response = JSON.parse(response.body, symbolize_names: true)
+        expect(author_response).to have_key(:errors)
+      end
+
+      it "renders the json errors on why the author could not be created" do
+        author_response = JSON.parse(response.body, symbolize_names: true)
+        expect(author_response[:errors][:email]).to include "is invalid"
+      end
+
+      it { should respond_with 422 }
+    end
+  end
+
 end
