@@ -93,4 +93,14 @@ describe Api::V1::AuthorsController do
     end
   end
 
+  describe "DELETE #destroy" do
+    before(:each) do
+      @author = FactoryGirl.create :author
+      delete :destroy, { id: @author.id }, format: :json
+    end
+
+    it { should respond_with 204 }
+
+  end
+
 end

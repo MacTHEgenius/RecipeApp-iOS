@@ -30,6 +30,14 @@ class Api::V1::AuthorsController < ApplicationController
     end
   end
 
+  # DELETE
+
+  def destroy
+    author = Author.find(params[:id])
+    author.destroy
+    head 204
+  end
+
   private
     def author_params
       params.require(:author).permit(:email, :password, :password_confirmation)
