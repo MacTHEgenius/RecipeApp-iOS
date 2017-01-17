@@ -20,7 +20,10 @@ class Api::V1::SessionsController < ApplicationController
   # DELETE
 
   def destroy
-
+    author = Author.find_by(auth_token: params[:id])
+    author.generate_authentication_token!
+    author.save
+    head 204
   end
 
 end
