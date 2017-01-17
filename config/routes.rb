@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
       resources :authors, only: [:show, :create, :update, :destroy]
 
+      resources :sessions, only: [:create, :destroy]
+
     end
 
   end
