@@ -38,4 +38,24 @@ describe Authenticable do
     it { should respond_with 401 }
   end
 
+  describe "#author_sign_in?" do
+    context "when there is an author on 'session'" do
+      before do
+        @author = FactoryGirl.create :author
+        authentication.stub(:current_author).and_return(@author)
+      end
+
+      it { should be_author_signed_in }
+    end
+
+    context "when there is no user on 'session'" do
+      before do
+        @author = FactoryGirl.create :author
+        authentication.stub(:current_author).and_return(nil)
+      end
+
+      it { should_not be_author_signed_in }
+    end
+  end
+
 end
