@@ -1,5 +1,6 @@
 class Api::V1::AuthorsController < ApplicationController
 
+  before_action :authenticate_with_token!, only: [:update, :destroy]
   respond_to :json
 
   # GET
@@ -22,7 +23,7 @@ class Api::V1::AuthorsController < ApplicationController
   # PUT - PATCH
 
   def update
-    author = Author.find(params[:id])
+    author = current_author
     if author.update(author_params)
       render json: author, status: 200, location: [:api, author]
     else
@@ -33,8 +34,7 @@ class Api::V1::AuthorsController < ApplicationController
   # DELETE
 
   def destroy
-    author = Author.find(params[:id])
-    author.destroy
+    current_author.destroy
     head 204
   end
 

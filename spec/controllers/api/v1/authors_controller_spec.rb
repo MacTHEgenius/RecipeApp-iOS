@@ -59,14 +59,13 @@ describe Api::V1::AuthorsController do
   end
 
   describe "PUT/PATCH #update" do
+    before(:each) do
+      @author = FactoryGirl.create :author
+      request.headers['Authorization'] = @author.auth_token
+      patch :update, { id: @author.id, author: { email: "newmail@example.com" } }
+    end
 
     context "when is successfully updated" do
-      before(:each) do
-        @author = FactoryGirl.create :author
-        patch :update, { id: @author.id,
-                         author: { email: "newmail@example.com" } }
-      end
-
       it "renders the json representation for the updated author" do
         author_response = JSON.parse(response.body, symbolize_names: true)
         expect(author_response[:email]).to eql "newmail@example.com"
@@ -78,8 +77,7 @@ describe Api::V1::AuthorsController do
     context "when is not created" do
       before(:each) do
         @author = FactoryGirl.create :author
-        patch :update, { id: @author.id,
-                         author: { email: "bademail.com" } }
+        patch :update, { id: @author.id, author: { email: "bademail.com" } }
       end
 
       it "renders an errors json" do
@@ -99,6 +97,7 @@ describe Api::V1::AuthorsController do
   describe "DELETE #destroy" do
     before(:each) do
       @author = FactoryGirl.create :author
+      request.headers['Authorization'] = @author.auth_token
       delete :destroy, { id: @author.id }
     end
 
