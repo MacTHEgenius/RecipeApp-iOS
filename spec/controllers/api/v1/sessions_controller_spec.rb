@@ -45,7 +45,7 @@ describe Api::V1::SessionsController do
 
     before(:each) do
       @author = FactoryGirl.create :author
-      sign_in @author, store: false
+      sign_in @author # ,  store: false
       delete :destroy, id: @author.auth_token
     end
 

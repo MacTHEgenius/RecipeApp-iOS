@@ -4,6 +4,8 @@ class Author < ActiveRecord::Base
 
   validates :auth_token, uniqueness: true
 
+  has_many :recipes, dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

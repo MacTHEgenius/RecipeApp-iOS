@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Recipe do
-  before { @recipe = FactoryGirl.build(:recipe) }
-  subject { @recipe }
+  let(:recipe) { FactoryGirl.build :recipe }
+  subject { recipe }
 
   it { should respond_to(:name) }
   it { should respond_to(:cooking_duration) }
@@ -16,4 +16,6 @@ describe Recipe do
 
   it { should validate_numericality_of(:cooking_duration).is_greater_than_or_equal_to(0) }
   it { should validate_numericality_of(:baking_duration).is_greater_than_or_equal_to(0) }
+
+  it { should belong_to :author }
 end
