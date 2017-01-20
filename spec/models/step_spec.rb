@@ -15,4 +15,6 @@ describe Step do
   it { should validate_numericality_of(:count).is_greater_than_or_equal_to(1) }
 
   it { should validate_length_of(:description).is_at_least(5) }
+
+  it { should belong_to :recipe }
 end

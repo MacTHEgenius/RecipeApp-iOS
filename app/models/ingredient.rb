@@ -4,4 +4,6 @@ class Ingredient < ActiveRecord::Base
   validates :quantity, numericality: {greater_than_or_equal_to: 0.0}, presence: true
   validates :recipe_id, presence: true
 
+  belongs_to :recipe
+
 end

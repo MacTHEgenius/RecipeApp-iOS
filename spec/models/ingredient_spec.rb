@@ -16,4 +16,6 @@ describe Ingredient do
 
   it { should validate_length_of(:name).is_at_least(3) }
   it { should validate_length_of(:name).is_at_most(100) }
+
+  it { should belong_to :recipe }
 end
