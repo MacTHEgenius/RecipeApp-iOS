@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
       resources :sessions, only: [:create, :destroy]
 
+      resources :recipes, only: [:index, :show]
+
     end
 
   end
